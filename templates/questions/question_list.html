@@ -1,0 +1,34 @@
+{% extends "../base.html" %}
+
+{% block title %}
+Questions list
+{% endblock title %}
+
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.level_tag }}" role="alert">
+  {{ message.message }}
+</div>
+{% endfor %}
+{% endif %}
+{% for question in questions %}
+<div class="card mt-3">
+  <div class="card-body">
+    <h5 class="card-title my-5">
+      <a href="{% url 'question_detail' question.slug %}">{{question.title}}</a>
+      <div class="card-footer">
+        <div class="row">
+          <div class="col col-md-auto text-muted mt-3">
+            Posted by: {{question.author.username}}
+          </div>
+          <div class="col col-md-auto text-muted mt-3">
+            Answers: {{question.answers.count}}
+          </div>
+        </div>
+      </div>
+    </h5>
+  </div>
+</div>
+{% endfor %}
+{% endblock content %}

@@ -1,0 +1,55 @@
+{% extends "../base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+Your questions & answers
+{% endblock title %}
+
+
+{% block content %}
+<ul class="nav nav-tabs my-5" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Questions</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Answers</button>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <div class="card mt-4 py-3 shadow">
+      <h4 class="card-header">You have asked {{questions.count}} questions</h4>
+      <div class="card-body">
+        {% for question in questions %}
+        <h5 class="card-text">
+          <a href="{% url 'question_detail' question.slug %}">{{question.title}}</a>
+        </h5>
+        <!-- Delete question button -->
+        <a href="{% url 'delete_question' question.slug %}" class="btn btn-outline-danger my-3">Delete</a>
+        <!-- Update question button -->
+        <a href="{% url 'update_question' question.slug %}" class="btn btn-outline-warning my-3">Update</a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+    <div class="card mt-4 py-3 shadow">
+      <h4 class="card-header">You have answered {{answers.count}} questions</h4>
+      <div class="card-body">
+        {% for answer in answers %}
+        <h5 class="card-text">
+          <a href="{% url 'question_detail' answer.question.slug %}">{{answer.question.title}}</a>
+        </h5>
+        <p>{{answer.description}}</p>
+        <!-- Delete answer button -->
+        <a href="{% url 'delete_answer' answer.id %}" class="btn btn-outline-danger my-3">Delete</a>
+        <!-- Update answer button -->
+        <a href="{% url 'update_answer' answer.id %}" class="btn btn-outline-warning my-3">Update</a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+

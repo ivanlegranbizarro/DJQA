@@ -1,0 +1,16 @@
+{% extends "../base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+Add a new question
+{% endblock title %}
+
+{% block content %}
+<h1 class="my-5">Add a new question!</h1>
+<form action="" method="POST" novalidate>
+  {% csrf_token %}
+  {{form | crispy}}
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock content %}
